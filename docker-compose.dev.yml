@@ -1,0 +1,30 @@
+version: "3"
+services:
+  # database container
+  database:
+    image: postgres:10-alpine
+    container_name: postgres_database
+    hostname: postgres_database
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_DB=postgres_database
+    volumes:
+      - ./postgres_database_data:/var/lib/postgresql
+    restart: always
+
+  # backend container
+  backend:
+    container_name: server
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    env_file: "./backend/docker/.devconfig.env"
+    volumes:
+      - ./backend:/server
+    depends_on:
+      - database
