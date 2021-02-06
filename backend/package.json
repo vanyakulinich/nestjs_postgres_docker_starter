@@ -18,7 +18,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrations:generate": "npx typeorm migration:generate -n SchemaSync",
+    "migrations:create": "npx typeorm migration:create -n SchemaSync",
+    "migrations:run": "npx typeorm migration:run",
+    "migrations:revert": "npx typeorm migration:revert",
+    "launch:prod": "npm run migrations:generate && npm run migrations:run && npm run pm2:start"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",

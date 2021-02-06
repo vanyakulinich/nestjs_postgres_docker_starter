@@ -1,0 +1,20 @@
+FROM node:lts-alpine
+ENV NODE_ENV=development
+
+WORKDIR /var/www/backend
+
+COPY ./package.json ./
+
+# Copy local code to the container image.
+COPY . .
+
+RUN npm install
+
+# Expose API port
+EXPOSE 5000
+
+# Display directory structure
+RUN ls -l -a
+
+# Run the web service on container startup.
+CMD [ "npm", "run", "start:dev" ]

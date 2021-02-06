@@ -1,0 +1,26 @@
+FROM node:lts-alpine
+
+WORKDIR /var/www/backend
+
+ENV NODE_ENV=production
+
+RUN npm install -g pm2
+
+# Copy local code to the container image.
+COPY . . 
+
+# hack for proper nest build - install separately dev and prod dependencies.
+# if use "npm install", than swagger plugin error breaks the build. No working solutions found in official nest docs 
+RUN npm install --only=prod
+RUN npm install --only=dev
+
+RUN npm run build
+
+# Display directory structure 
+RUN ls -l -a
+
+# Expose API port
+EXPOSE 5000
+
+# Run the web service on container startup.
+CMD [ "npm", "run", "launch:prod" ]
