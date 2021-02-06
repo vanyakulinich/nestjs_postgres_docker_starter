@@ -1,1 +1,6 @@
-/postgres_database_data
+# ignore postgres db folders
+/postgres*
+.env*
+# except example envs
+!.env.*.example
+!.env.example
