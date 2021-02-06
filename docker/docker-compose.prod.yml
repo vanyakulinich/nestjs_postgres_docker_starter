@@ -15,6 +15,28 @@ services:
     networks:
       - prod
 
+  backend_prod:
+    container_name: backend_prod
+    ports:
+      - 5000:5000
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ../backend:/var/www/backend
+      - /var/www/backend/node_modules
+    restart: always
+    links:
+      - postgres_prod:postgres_prod
+    depends_on:
+      - postgres_prod
+    networks:
+      - prod
+
+  # NOTE: for production, add container with web server, e.g. nginx to serve and proxy requests.
+  # For example, docker image "nginx-certbot" already includes https support and auto regeneration of https certificates.
+  # Keep in mind, that domain is required with A-record to make this image work properly.
+
 volumes:
   postgres_prod:
 

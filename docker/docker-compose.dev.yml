@@ -14,6 +14,24 @@ services:
     restart: always
     networks:
       - dev
+  
+   backend_dev:
+    container_name: backend_dev
+    ports:
+      - 5000:5000
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ../backend:/var/www/backend
+      - /var/www/backend/node_modules
+    restart: always
+    links:
+      - postgres_dev:postgres_dev
+    depends_on:
+      - postgres_dev
+    networks:
+      - dev
 
 volumes:
   postgres_dev:
