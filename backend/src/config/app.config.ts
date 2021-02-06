@@ -1,7 +1,7 @@
 import * as Joi from '@hapi/joi'
 import { IAppConfigOptions } from './interfaces'
 
-export const appConfigOptions: IAppConfigOptions = {
+export const createAppConfigOptions = (): IAppConfigOptions => ({
   isGlobal: true,
   envFilePath: `.env.${process.env.NODE_ENV || 'development'}`, // dev by default
   validationSchema: Joi.object({
@@ -12,4 +12,4 @@ export const appConfigOptions: IAppConfigOptions = {
     POSTGRES_HOST: Joi.string().required(),
     POSTGRES_PORT: Joi.number().default(5432),
   }),
-}
+})

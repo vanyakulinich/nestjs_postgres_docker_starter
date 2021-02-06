@@ -14,8 +14,8 @@ services:
     restart: always
     networks:
       - dev
-  
-   backend_dev:
+
+  backend_dev:
     container_name: backend_dev
     ports:
       - 5000:5000
@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ../backend:/var/www/backend
-      - /var/www/backend/node_modules
+      - ../backend/node_modules:/var/www/backend/node_modules
     restart: always
     links:
       - postgres_dev:postgres_dev
@@ -38,4 +38,3 @@ volumes:
 
 networks:
   dev:
-    driver: bridge

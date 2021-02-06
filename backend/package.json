@@ -13,6 +13,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "pm2:start": "npx pm2 start ./dist/main.js --instances 1 --name backend --watch --ignore-watch='node_modules' --max-memory-restart 1G --no-daemon",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
@@ -24,7 +25,7 @@
     "migrations:create": "npx typeorm migration:create -n SchemaSync",
     "migrations:run": "npx typeorm migration:run",
     "migrations:revert": "npx typeorm migration:revert",
-    "launch:prod": "npm run migrations:generate && npm run migrations:run && npm run pm2:start"
+    "launch:prod": "npm run build && npm run migrations:generate && npm run migrations:run && npm run pm2:start"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -39,6 +40,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
+    "swagger-ui-express": "^4.1.6",
     "typeorm": "^0.2.30"
   },
   "devDependencies": {

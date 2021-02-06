@@ -23,6 +23,7 @@ services:
       context: ../backend
       dockerfile: Dockerfile.prod
     volumes:
+      # remove volumes if no need to react on changes, e.g. pull from remote git repo
       - ../backend:/var/www/backend
       - /var/www/backend/node_modules
     restart: always
@@ -42,4 +43,3 @@ volumes:
 
 networks:
   prod:
-    driver: bridge

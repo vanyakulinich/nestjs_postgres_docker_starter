@@ -15,7 +15,10 @@ async function bootstrap() {
     .build()
 
   const document = SwaggerModule.createDocument(app, options)
-
+  /** NOTE:
+   * Swagger uses plugin for auto generate of api docs and reduce swagger decorators in code.
+   * plugin config is specified in nest-cli.json
+   */
   SwaggerModule.setup(`${API_PREFIX}/docs`, app, document)
 
   await app.listen(process.env.PORT)
