@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  postgres_dev:
+    container_name: postgres_dev
+    hostname: postgres_dev
+    image: postgres
+    ports:
+      - 5432:5432
+    env_file:
+      - .env.database.dev
+    volumes:
+      - ../postgres_dev:/var/lib/postgresql
+    restart: always
+    networks:
+      - dev
+
+volumes:
+  postgres_dev:
+
+networks:
+  dev:
+    driver: bridge
