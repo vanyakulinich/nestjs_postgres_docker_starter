@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { appConfigOptions } from './config/app.config'
 import { ormConfigOptions } from './config/orm.config'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
@@ -13,6 +14,8 @@ import { ormConfigOptions } from './config/orm.config'
       useFactory: () => ormConfigOptions,
     }),
     // load all other modules here
+    //  Users module is added as an example
+    UsersModule, // EXAMPLE MODULE
   ],
   controllers: [],
   providers: [],
