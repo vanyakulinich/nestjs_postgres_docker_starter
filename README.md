@@ -58,3 +58,9 @@ Containers names can be found and modified in .yml file.
 ### TODO:
 
 - [x] Production configuration (it is up to you, how to configure)
+
+githooks:
+
+<!-- TODO -->
+
+chmod +x .git-hooks/pre-commit
