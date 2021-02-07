@@ -10,8 +10,8 @@ services:
     env_file:
       - .env.database.dev
     volumes:
-      - ../postgres_dev:/var/lib/postgresql
-    restart: always
+      - ../postgres_dev:/var/lib/postgresql/data
+    restart: unless-stopped
     networks:
       - dev
 

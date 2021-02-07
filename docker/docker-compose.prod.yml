@@ -10,8 +10,8 @@ services:
     env_file:
       - .env.database.prod
     volumes:
-      - ../postgres_prod:/var/lib/postgresql
-    restart: always
+      - ../postgres_prod:/var/lib/postgresql/data
+    restart: unless-stopped
     networks:
       - prod
 
