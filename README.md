@@ -1,66 +1,82 @@
-# NEST.js + PostgeSQL development template with Docker
+## NestJS + PostgreSQL + Docker Starter Template
 
-### How it works:
+### Description
 
-This template includes Nest.js backend and PostgreSQL database. Both are started in separate docker containers, connected between each other and are configured for further development. You don't need to have postgres at your machine, it will start in container from dockerhub image. This template uses Postges 10. The containers are managed by docker-compose. This template includes configuration only for development, it is up to you to add production configuration.
+Starter Template for building apps with Nest.js backend and PostgreSQL database, wrapped in docker containers.<br/>
+Use "whatever" framework for frontend - just add container to docker-compose files.<br/>
+Main purpose of this starter is to save developers time, which is usually spend on creating basic skeletons, configs and getting all together when building the apps.
 
-### How to start:
+### What's inside
 
-#### You need to have docker and docker-compose installed on your machine.
+- [x] PostgreSQL local database
+- [x] Nest.js as backend server
+- [x] Environments are splitted (development/production)
+- [x] Configs setup
+- [x] Some basic backend examples(module+service+controller+entity)
+- [x] Git hooks support (pre-commit + commit-msg)
+- [x] Conventional Commits Support
+- [x] Docker + docker-compose configs
+- [x] Bash scripts for one-command docker launch
+- [x] Pm2 support for production
+- [x] Migrations support for production
 
-To start containers:
+### Before use
 
-```bash
-bash start_dev.sh
-```
+Starter has git hooks support and alrady has pre-commit and commit hooks added:
 
-To stop containers:
-
-```bash
-bash stop_dev.sh
-```
-
-To rebuild containers in dev mode:
-
-```bash
-bash rebuild_dev_containers.sh
-```
-
-To test database connection when containers are started:
-
-```bash
-bash test_db_connection.sh
-```
-
-### How to use:
-
-When containers are started, you will have:
-
-- nest.js backend server on localhost:3000
-  - server has test route /testdata as an example(check /backend/src)
-- postges connection on localhost:54320 to access via any GUI interface(e.g. pgAdmin)
-- hot-reload of nest backend
-
-### Migrations:
-
-In development mode, migrations are automatically applied. Check "synchronize" parameter in /backend/config/orm.config.ts. In production mode it is strongly recommended to set "synchronize" parameter to false, to avoid potential data loss. In production mode, make and apply migrations manually. As server is in docker container, you need to run migrations commands from inside container:
+- pre-commit hook start eslint check on backend. if eslint fails, the commit won't happen with errors logs output and tip what to do. Hooks can be updated to add some actions, e.g. eslint for possible frontend.
+- commit-msg hook checks if the commit message corresponds with conventional commits. Starter uses [git-conventional-commits](https://github.com/qoomon/git-conventional-commits). Please check it's docs and modify settings if needed.<br/>
+  NOTE: <br/>
+  To use conventional commits:
 
 ```bash
-# generate migration
-docker exec -it [CONTAINER NAME OR ID] yarn migrate:generate [NAME OF MIGRATION]
+  # install package
+  npm install --global git-conventional-commits
 
-# run migration
-docker exec -it [CONTAINER NAME OR ID] yarn migrate
+  # give access to hooks files to make it work
+  chmod +x .git-hooks/commit-msg
+  chmod +x .git-hooks/pre-commit
+
 ```
 
-Containers names can be found and modified in .yml file.
+### How to use
 
-### TODO:
+Starter has 2 docker containers - one for database and one for backend. All configs are set up. Everything can be started via bash scripts with one-line commands.<br/>
+Note: you may need "sudo" for bash.
 
-- [x] Production configuration (it is up to you, how to configure)
+- Development mode:<br/>
 
-githooks:
+  ```bash
+    # navigate to scripts/ folder
+    cd scripts/
+    #(re-)build containers in dev mode. Not neccessary for the 1st start
+    [sudo] bash build_dev.sh
+    #to start containers in dev mode
+    [sudo] bash start_dev.sh
+    #to start containers in dev mode
+    [sudo] bash stop_dev.sh
+  ```
 
-<!-- TODO -->
+  NOTE:<br/>
+  In dev mode migrations are applied automatically via synchronize
 
-chmod +x .git-hooks/pre-commit
+- Production mode: <br/>
+
+  ```bash
+    # navigate to scripts/ folder
+    cd scripts/
+    #(re-)build containers in prod mode. Not neccessary for the 1st start
+    [sudo] bash build_prod.sh
+    #to start containers in prod mode
+    [sudo] bash start_prod.sh
+    #stop containers
+    [sudo] bash stop_prod.sh
+  ```
+
+  NOTE:<br/>
+  In production mode migrations are generated via typeorm cli together with the server launch when launching containers. No need to create or generate it manually before launch of server, everything can be done automatically via bash script that launches containers.
+
+### What's next
+
+Main purpose of this starter template is to rid developers of creating the basic projects skeleton and spending a lot of time with setting up basic projects configs.<br/>
+Feel free to use this starter template for building own apps, modify it as you need and actually change it whatever you like to fit your project demands.
