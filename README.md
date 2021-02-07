@@ -22,6 +22,35 @@ Main purpose of this starter is to save developers time, which is usually spend 
 
 ### Before use
 
+##### Envs
+
+You need to setup envs before using the starter.<br/>
+Envs should be divided into development and production:<br/>
+
+1. Set up envs for postgres database:
+
+```bash
+  # navigate to docker folder
+  cd docker/
+  # create .env files
+  touch .env.database.dev
+  touch .env.database.prod
+  # check .env.database.example for envs names
+```
+
+2. Set up envs for nestjs backend:
+
+```bash
+  # navigate to backend folder
+  cd backend/
+  # create .env files
+  touch .env.development
+  touch .env.production
+  # check .env.example for envs names
+```
+
+##### Git Hooks
+
 Starter has git hooks support and alrady has pre-commit and commit hooks added:
 
 - pre-commit hook start eslint check on backend. if eslint fails, the commit won't happen with errors logs output and tip what to do. Hooks can be updated to add some actions, e.g. eslint for possible frontend.
