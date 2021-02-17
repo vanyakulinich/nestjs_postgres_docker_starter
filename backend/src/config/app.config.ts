@@ -1,4 +1,3 @@
-import * as Joi from '@hapi/joi'
 import { registerAs } from '@nestjs/config'
 
 export const appConfig = registerAs('app', () => ({

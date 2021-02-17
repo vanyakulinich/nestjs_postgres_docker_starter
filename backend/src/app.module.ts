@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common'
-import { UsersModule } from './users/users.module'
+import { UserModule } from './user/user.module'
 import { ConfigModule } from './config/config.module'
+import { CommonModule } from './common/common.module'
 
 @Module({
   imports: [
     ConfigModule,
-    UsersModule,
+    UserModule,
+    CommonModule,
     // load all other modules here
   ],
 })

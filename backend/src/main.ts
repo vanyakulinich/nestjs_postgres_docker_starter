@@ -1,7 +1,10 @@
+import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+import { ResponseTimeoutInterceptor } from './common/interceptors/response-timeout.interceptor'
+import { WrapResponseInterceptor } from './common/interceptors/wrap-rsponse.interceptor'
 
 async function bootstrap() {
   const API_PREFIX = 'api' // global prefix for api
@@ -10,6 +13,18 @@ async function bootstrap() {
   const configService = app.get(ConfigService)
 
   app.setGlobalPrefix(API_PREFIX)
+
+  // global pipes
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      validateCustomDecorators: true,
+    }),
+  )
+  // global interceptors
+  app.useGlobalInterceptors(new WrapResponseInterceptor(), new ResponseTimeoutInterceptor())
 
   // Setting up Swagger document
   const options = new DocumentBuilder()
