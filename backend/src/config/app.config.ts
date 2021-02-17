@@ -1,15 +1,9 @@
 import * as Joi from '@hapi/joi'
-import { IAppConfigOptions } from './interfaces'
+import { registerAs } from '@nestjs/config'
 
-export const createAppConfigOptions = (): IAppConfigOptions => ({
-  isGlobal: true,
-  envFilePath: `.env.${process.env.NODE_ENV || 'development'}`, // dev by default
-  validationSchema: Joi.object({
-    PORT: Joi.number().default(5000),
-    POSTGRES_USER: Joi.string().required(),
-    POSTGRES_PASSWORD: Joi.string().required(),
-    POSTGRES_DB: Joi.string().required(),
-    POSTGRES_HOST: Joi.string().required(),
-    POSTGRES_PORT: Joi.number().default(5432),
-  }),
-})
+export const appConfig = registerAs('app', () => ({
+  port: parseInt(process.env.PORT),
+  nodeEnv: process.env.NODE_ENV,
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpires: process.env.JWT_EXPIRES,
+}))

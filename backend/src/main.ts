@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { AppModule } from './app.module'
@@ -5,6 +6,9 @@ import { AppModule } from './app.module'
 async function bootstrap() {
   const API_PREFIX = 'api' // global prefix for api
   const app = await NestFactory.create(AppModule)
+
+  const configService = app.get(ConfigService)
+
   app.setGlobalPrefix(API_PREFIX)
 
   // Setting up Swagger document
@@ -21,6 +25,6 @@ async function bootstrap() {
    */
   SwaggerModule.setup(`${API_PREFIX}/docs`, app, document)
 
-  await app.listen(process.env.PORT)
+  await app.listen(configService.get('app.port'))
 }
 bootstrap()
