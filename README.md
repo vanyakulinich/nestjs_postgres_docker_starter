@@ -3,7 +3,6 @@
 ### Description
 
 Starter Template for building apps with Nest.js backend and PostgreSQL database, wrapped in docker containers.<br/>
-Use "whatever" framework for frontend - just add container to docker-compose files.<br/>
 Main purpose of this starter is to save developers time, which is usually spend on creating basic skeletons, configs and getting all together when building the apps.
 
 ### What's inside
@@ -25,28 +24,12 @@ Main purpose of this starter is to save developers time, which is usually spend 
 ##### Envs
 
 You need to setup envs before using the starter.<br/>
-Envs should be divided into development and production:<br/>
-
-1. Set up envs for postgres database:
 
 ```bash
-  # navigate to docker folder
-  cd docker/
-  # create .env files
-  touch .env.database.dev
-  touch .env.database.prod
-  # check .env.database.example for envs names
-```
+$ touch .env # create env file
 
-2. Set up envs for nestjs backend:
-
-```bash
-  # navigate to backend folder
-  cd backend/
-  # create .env files
-  touch .env.development
-  touch .env.production
-  # check .env.example for envs names
+# check .env.example for envs names
+# setup envs in .env according to prod/dev/debug mode
 ```
 
 ##### Git Hooks
@@ -70,40 +53,35 @@ Starter has git hooks support and alrady has pre-commit and commit hooks added:
 
 ### How to use
 
-Starter has 2 docker containers - one for database and one for backend. All configs are set up. Everything can be started via bash scripts with one-line commands.<br/>
+Starter has 2 docker containers - one for database and one for backend. All configs are set up. Everything can be started via docker-compose one-line commands.<br/>
 Note: you may need "sudo" for bash.
 
-- Development mode:<br/>
+- Before first launch:<br/>
 
   ```bash
-    # navigate to scripts/ folder
-    cd scripts/
-    #(re-)build containers in dev mode. Not neccessary for the 1st start
-    [sudo] bash build_dev.sh
-    #to start containers in dev mode
-    [sudo] bash start_dev.sh
-    #to start containers in dev mode
-    [sudo] bash stop_dev.sh
+   # before fisrt start
+   npm install # to avoid ts warnings in ide
+  [sudo] docker-compose build # build containers, also use it for rebuilding existing containers
+  ```
+
+- Start/stop app:<br/>
+
+  ```bash
+    [sudo] docker-compose up # start containers
+
+    # Note: you can run container in a detached mode
+    [sudo] docker-compose up -d
+    # To check containers logs
+    [sudo] docker-compose logs -f
+    # To stop containers
+    [sudo] docker-container down # stops and removes containers
+    # To restart containers
+    [sudo] docker-container restart
   ```
 
   NOTE:<br/>
-  In dev mode migrations are applied automatically via synchronize
-
-- Production mode: <br/>
-
-  ```bash
-    # navigate to scripts/ folder
-    cd scripts/
-    #(re-)build containers in prod mode. Not neccessary for the 1st start
-    [sudo] bash build_prod.sh
-    #to start containers in prod mode
-    [sudo] bash start_prod.sh
-    #stop containers
-    [sudo] bash stop_prod.sh
-  ```
-
-  NOTE:<br/>
-  In production mode migrations are generated via typeorm cli together with the server launch when launching containers. No need to create or generate it manually before launch of server, everything can be done automatically via bash script that launches containers.
+  In dev mode migrations are applied automatically via nest-typeorm synchronize prop.<br/>
+  In production mode migrations are generated via typeorm cli together with the server launch when launching containers. No need to create or generate it manually before launch of server, everything can be done automatically when containers start.
 
 ### What's next
 
