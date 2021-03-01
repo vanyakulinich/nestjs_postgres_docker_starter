@@ -18,8 +18,8 @@ services:
     networks:
       - backend
 
-  backend_dev:
-    container_name: backend_dev
+  server:
+    container_name: server
     ports:
       - ${PORT}:5000
     build:
@@ -31,7 +31,7 @@ services:
       - ./:/var/www/backend
       - ./node_modules:/var/www/backend/node_modules
     restart: always
-    command: ./start_app.sh ${NODE_ENV}
+    command: bash ./start_app.sh ${NODE_ENV}
     links:
       - postgres_database:${POSTGRES_HOST}
     depends_on:

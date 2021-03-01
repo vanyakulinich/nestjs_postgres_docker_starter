@@ -1,15 +1,9 @@
-import * as dotenv from 'dotenv'
-import * as path from 'path'
 import { Module } from '@nestjs/common'
 import { ConfigModule as NestConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { appConfig } from './app.config'
 import { databaseConfig } from './database.config'
 import { createValidationSchema } from './validation.schema'
-
-dotenv.config({
-  path: path.resolve(`.env.${process.env.NODE_ENV || 'development'}`),
-})
 
 @Module({
   imports: [

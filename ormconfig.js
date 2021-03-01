@@ -3,7 +3,7 @@
  */
 
 // parse envs, since ormconfig is outside nest scope
-require('dotenv').config({ path: `./.env.production` })
+require('dotenv').config()
 
 module.exports = {
   type: 'postgres',
