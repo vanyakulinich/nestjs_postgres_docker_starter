@@ -38,6 +38,17 @@ export class UserService {
   }
 
   /**
+   * Find user by email
+   * @param email: string
+   * @returns Promise<User>
+   */
+  async findOneByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ email })
+    this._checkUserAndThrowNotFound(user)
+    return user
+  }
+
+  /**
    * Create new user. Used by Auth Service when signup new user
    * @param createUserDto: CreateUserDto
    * @returns: Promise<User>
