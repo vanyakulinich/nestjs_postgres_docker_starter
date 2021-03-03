@@ -1,4 +1,3 @@
-import { ApiResponseProperty } from '@nestjs/swagger'
 import { Expose } from 'class-transformer'
 import { BaseEntity } from 'src/common/entities/base.entity'
 import { Column, Entity } from 'typeorm'

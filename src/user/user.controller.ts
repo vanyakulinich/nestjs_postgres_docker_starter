@@ -1,5 +1,5 @@
 import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common'
-import { ApiNotFoundResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiNotFoundResponse, ApiOperation } from '@nestjs/swagger'
 import { ApiDoc } from 'src/common/decorators/api-doc.decorator'
 import { User } from './entity/user.entity'
 import { UserService } from './user.service'
