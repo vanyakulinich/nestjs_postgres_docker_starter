@@ -38,7 +38,7 @@ export class UserService {
   }
 
   /**
-   * Create new user
+   * Create new user. Used by Auth Service when signup new user
    * @param createUserDto: CreateUserDto
    * @returns: Promise<User>
    */
