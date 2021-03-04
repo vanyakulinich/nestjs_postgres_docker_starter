@@ -7,6 +7,6 @@ import { NotFoundException } from '@nestjs/common'
  */
 export function throwNotFoundIfNull<Entity>(entity: Entity | Entity[]) {
   if (!entity || (Array.isArray(entity) && !entity.length)) {
-    throw new NotFoundException('Item not FOund')
+    throw new NotFoundException('Item Not Found')
   }
 }

@@ -1,9 +1,10 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { IJwtUser } from 'src/auth/interfaces/jwt-interface'
 import { PasswordService } from 'src/common/services/password.service'
 import { throwNotFoundIfNull } from 'src/common/utils/check-not-found.utls'
 import { Repository } from 'typeorm'
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto'
+import { ChangePasswordDto, CreateUserDto, UpdateUserDto } from './dto/user.dto'
 import { User } from './entity/user.entity'
 
 /**
@@ -90,5 +91,25 @@ export class UserService {
     const user = await this.userRepository.findOne(userId)
     throwNotFoundIfNull<typeof user>(user)
     await this.userRepository.delete(userId)
+  }
+
+  /**
+   * Change user password
+   * @param userId string
+   * @param changePasswordDto ChangePasswordDto
+   * @returns Promise<void>
+   */
+  async changeUserPassword(userId: string, changePasswordDto: ChangePasswordDto): Promise<void> {
+    const dbUser = await this.userRepository.findOne(userId)
+    throwNotFoundIfNull<typeof dbUser>(dbUser)
+    const isPassEqual = await this.passwordService.comparePassword(
+      dbUser.password,
+      changePasswordDto.password,
+    )
+    if (isPassEqual) {
+      throw new ConflictException('New password must differ from existing one')
+    }
+    dbUser.password = await this.passwordService.hashPassword(changePasswordDto.password)
+    await this.userRepository.save(dbUser)
   }
 }

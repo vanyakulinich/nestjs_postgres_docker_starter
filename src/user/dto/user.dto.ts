@@ -29,3 +29,12 @@ export class CreateUserDto extends BasicUserDto {
  * @extends BasicUserDto: all props marked as optional
  */
 export class UpdateUserDto extends PartialType(BasicUserDto) {}
+
+/**
+ * Change user password DTO
+ */
+export class ChangePasswordDto {
+  @IsString()
+  @MinLength(6)
+  password: string
+}

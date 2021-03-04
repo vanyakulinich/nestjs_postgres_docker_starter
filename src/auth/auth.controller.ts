@@ -1,5 +1,5 @@
 import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common'
-import { ApiConflictResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger'
+import { ApiConflictResponse, ApiNotFoundResponse } from '@nestjs/swagger'
 import { ApiDoc } from 'src/common/decorators/api-doc.decorator'
 import { CreateUserDto } from 'src/user/dto/user.dto'
 import { AuthService } from './auth.service'

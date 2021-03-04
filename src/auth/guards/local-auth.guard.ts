@@ -7,7 +7,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
     super()
   }
 
-  handleRequest(err, user, info) {
+  handleRequest(err, user) {
     // throw an exception based on either "info" or "err" arguments
     if (err || !user) {
       throw err || new NotFoundException('User not found')

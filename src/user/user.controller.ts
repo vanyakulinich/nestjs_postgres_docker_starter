@@ -1,9 +1,15 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common'
-import { ApiNotFoundResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger'
+import {
+  ApiConflictResponse,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+} from '@nestjs/swagger'
 import { IJwtUser } from 'src/auth/interfaces/jwt-interface'
 import { ApiDoc } from 'src/common/decorators/api-doc.decorator'
 import { UserFromRequest } from 'src/common/decorators/user-from-request.decorator'
-import { UpdateUserDto } from './dto/user.dto'
+import { ChangePasswordDto, UpdateUserDto } from './dto/user.dto'
 import { User } from './entity/user.entity'
 import { UserService } from './user.service'
 
@@ -45,6 +51,7 @@ export class UserController {
    */
   @Patch()
   @ApiOperation({ description: 'Update user' })
+  @ApiNotFoundResponse({ description: 'Not Found' })
   async update(
     @Body() updateUserDto: UpdateUserDto,
     @UserFromRequest() user: IJwtUser,
@@ -60,9 +67,29 @@ export class UserController {
   @Delete()
   @ApiOperation({ description: 'Delete user' })
   @ApiOkResponse({ description: 'Ok' })
+  @ApiNotFoundResponse({ description: 'Not Found' })
   async delete(@UserFromRequest() user: IJwtUser): Promise<void> {
     return await this.userService.delete(user.id)
   }
 
+  /**
+   * Change user password
+   * @param user IJwtUser
+   * @param changePasswordDto ChangePasswordDto
+   * @returns Promise<void>
+   */
+  @Post('change-password')
+  @ApiOperation({ description: 'Change user password' })
+  @ApiNotFoundResponse({ description: 'Not Found' })
+  @ApiCreatedResponse({ description: 'Created' })
+  @ApiConflictResponse({ description: 'Already exists' })
+  async changeUserPassword(
+    @UserFromRequest() user: IJwtUser,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ): Promise<void> {
+    return await this.userService.changeUserPassword(user.id, changePasswordDto)
+  }
+
+  // TODO: MAKE REUSABLE @RouteDoc
   // add more routes handlers here
 }
