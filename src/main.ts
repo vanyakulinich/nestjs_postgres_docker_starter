@@ -28,8 +28,8 @@ async function bootstrap() {
 
   // Setting up Swagger document
   const options = new DocumentBuilder()
-    .setTitle('FilesHub API')
-    .setDescription('FilesHub application API docs')
+    .setTitle('API')
+    .setDescription('API docs')
     .setVersion('1.0')
     .build()
 

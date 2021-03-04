@@ -5,7 +5,6 @@ import { CreateUserDto } from 'src/user/dto/user.dto'
 import { User } from 'src/user/entity/user.entity'
 import { UserService } from 'src/user/user.service'
 import { AuthResponse } from './dto/auth-response'
-import { SigninUserDto } from './dto/signin-user.dto'
 
 /**
  * Auth Service
@@ -41,13 +40,13 @@ export class AuthService {
     return this._createAuthResponse(user)
   }
 
-  //  TODO:
-  async signin(user: User): Promise<AuthResponse> {
-    // TODO
-    console.log('USER', user)
-    return {
-      jwt: '',
-    }
+  /**
+   * Sign in existing user
+   * @param user User
+   * @returns AuthResponse
+   */
+  signin(user: User): AuthResponse {
+    return this._createAuthResponse(user)
   }
 
   /**

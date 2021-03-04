@@ -22,14 +22,14 @@ export class AuthController {
    * Signin existing user
    * @param signinUserDto: SigninUserDto
    * @param req: Request
-   * @returns Promise<AuthResponse>
+   * @returns AuthResponse
    */
   @UseGuards(new ValidateBodyGuard(SigninUserDto), LocalAuthGuard)
   @Post('signin')
   @ApiOkResponse({ description: 'ok', type: AuthResponse })
   @ApiNotFoundResponse({ description: 'Not found' })
-  async signin(@Body() signinUserDto: SigninUserDto, @Request() req): Promise<AuthResponse> {
-    return await this.authService.signin(req.user)
+  signin(@Body() signinUserDto: SigninUserDto, @Request() req): AuthResponse {
+    return this.authService.signin(req.user)
   }
 
   /**
