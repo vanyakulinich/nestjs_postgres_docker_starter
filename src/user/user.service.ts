@@ -1,6 +1,5 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { IJwtUser } from 'src/auth/interfaces/jwt-interface'
 import { PasswordService } from 'src/common/services/password.service'
 import { throwNotFoundIfNull } from 'src/common/utils/check-not-found.utls'
 import { Repository } from 'typeorm'

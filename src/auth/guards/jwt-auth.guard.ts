@@ -2,8 +2,6 @@ import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/com
 import { AuthGuard } from '@nestjs/passport'
 import { Reflector } from '@nestjs/core'
 import { IS_PUBLIC_ROUTE } from 'src/common/decorators/public-route.decorator'
-import { IJwtUser } from '../interfaces/jwt-interface'
-import { User } from 'src/user/entity/user.entity'
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
