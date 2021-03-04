@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer'
+import { ApiHideProperty } from '@nestjs/swagger'
+import { Exclude, Expose } from 'class-transformer'
 import { BaseEntity } from 'src/common/entities/base.entity'
 import { Column, Entity } from 'typeorm'
 
@@ -20,6 +21,8 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email: string
 
+  @ApiHideProperty()
+  @Exclude({ toPlainOnly: true })
   @Column()
   password: string
 

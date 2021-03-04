@@ -26,7 +26,6 @@ export class AuthController {
    */
   @UseGuards(new ValidateBodyGuard(SigninUserDto), LocalAuthGuard)
   @Post('signin')
-  @ApiOkResponse({ description: 'ok', type: AuthResponse })
   @ApiNotFoundResponse({ description: 'Not found' })
   signin(@Body() signinUserDto: SigninUserDto, @Request() req): AuthResponse {
     return this.authService.signin(req.user)
@@ -39,7 +38,6 @@ export class AuthController {
    */
   @Post('signup')
   @ApiConflictResponse({ description: 'Already exists' })
-  @ApiOkResponse({ description: 'ok', type: AuthResponse })
   async signup(@Body() createUserDto: CreateUserDto): Promise<AuthResponse> {
     return await this.authService.signup(createUserDto)
   }

@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common'
 import { ApiNotFoundResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger'
+import { IJwtUser } from 'src/auth/interfaces/jwt-interface'
 import { ApiDoc } from 'src/common/decorators/api-doc.decorator'
+import { UserFromRequest } from 'src/common/decorators/user-from-request.decorator'
 import { UpdateUserDto } from './dto/user.dto'
 import { User } from './entity/user.entity'
 import { UserService } from './user.service'
@@ -15,6 +17,7 @@ export class UserController {
 
   /**
    * Find All Users
+   * @returns Promise<User[]>
    */
   @Get()
   @ApiOperation({ description: 'Find all users' })
@@ -25,6 +28,7 @@ export class UserController {
   /**
    * Find User By userId
    * @param userId: string
+   * @returns Promise<User>
    */
   @Get(':userId')
   @ApiOperation({ description: 'Find user by userId' })
@@ -36,22 +40,28 @@ export class UserController {
   /**
    * Update authorized user
    * @param updateUserDto: UpdateUserDto
+   * @param user IJwtUser
+   * @returns Promise<User>
    */
   @Patch()
   @ApiOperation({ description: 'Update user' })
-  async update(@Body() updateUserDto: UpdateUserDto): Promise<User> {
-    // TODO: add userID
-    return await this.userService.update(updateUserDto, '')
+  async update(
+    @Body() updateUserDto: UpdateUserDto,
+    @UserFromRequest() user: IJwtUser,
+  ): Promise<User> {
+    return await this.userService.update(updateUserDto, user.id)
   }
 
   /**
    * Delete user
+   * @param user: IJwtUser
+   * @returns Promise<void>
    */
   @Delete()
   @ApiOperation({ description: 'Delete user' })
   @ApiOkResponse({ description: 'Ok' })
-  async delete(): Promise<void> {
-    // TODO: add service call when auth implemented
+  async delete(@UserFromRequest() user: IJwtUser): Promise<void> {
+    return await this.userService.delete(user.id)
   }
 
   // add more routes handlers here
