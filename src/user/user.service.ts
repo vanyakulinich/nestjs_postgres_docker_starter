@@ -1,6 +1,7 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { PasswordService } from 'src/common/services/password.service'
+import { throwNotFoundIfNull } from 'src/common/utils/check-not-found.utls'
 import { Repository } from 'typeorm'
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto'
 import { User } from './entity/user.entity'
@@ -44,7 +45,7 @@ export class UserService {
    */
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOne({ email })
-    this._checkUserAndThrowNotFound(user)
+    throwNotFoundIfNull<typeof user>(user)
     return user
   }
 
@@ -76,7 +77,7 @@ export class UserService {
       id: userId,
       ...updateUserDto,
     })
-    this._checkUserAndThrowNotFound(user)
+    throwNotFoundIfNull<typeof user>(user)
     return await this.userRepository.save(user)
   }
 
@@ -87,18 +88,7 @@ export class UserService {
    */
   async delete(userId: string): Promise<void> {
     const user = await this.userRepository.findOne(userId)
-    this._checkUserAndThrowNotFound(user)
+    throwNotFoundIfNull<typeof user>(user)
     await this.userRepository.delete(userId)
-  }
-
-  /**
-   * Checks user presense, throws NotFoundException if no user
-   * @param user: User
-   * @returns void
-   */
-  private _checkUserAndThrowNotFound(user: User): void {
-    if (!user) {
-      throw new NotFoundException('User not found')
-    }
   }
 }
