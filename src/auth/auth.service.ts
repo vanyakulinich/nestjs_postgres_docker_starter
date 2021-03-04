@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 import { PasswordService } from 'src/common/services/password.service'
 import { CreateUserDto } from 'src/user/dto/user.dto'
 import { User } from 'src/user/entity/user.entity'
@@ -14,6 +15,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly passwordService: PasswordService,
+    private readonly jwtService: JwtService,
   ) {}
 
   /**
@@ -29,19 +31,34 @@ export class AuthService {
     return isPasswordMatch ? user : null
   }
 
-  // TODO docs + jwt sign
+  /**
+   * Signup new user
+   * @param createUserDto: CreateUserDto
+   * @returns Promise<AuthResponse>
+   */
   async signup(createUserDto: CreateUserDto): Promise<AuthResponse> {
+    const user = await this.userService.create(createUserDto)
+    return this._createAuthResponse(user)
+  }
+
+  //  TODO:
+  async signin(user: User): Promise<AuthResponse> {
     // TODO
-    // const user = await this.userService.create(createUserDto)
+    console.log('USER', user)
     return {
       jwt: '',
     }
   }
-  //  TODO:
-  async signin(signinUserDto: SigninUserDto): Promise<AuthResponse> {
-    // TODO
+
+  /**
+   * Helper private method to create jwt
+   * @param user: User
+   * @returns AuthResponse
+   */
+  private _createAuthResponse(user: User): AuthResponse {
+    const { id, email } = user
     return {
-      jwt: '',
+      jwt: this.jwtService.sign({ id, email }),
     }
   }
 }

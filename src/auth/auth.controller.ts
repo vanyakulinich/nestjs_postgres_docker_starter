@@ -1,5 +1,5 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common'
-import { ApiConflictResponse, ApiNotFoundResponse } from '@nestjs/swagger'
+import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common'
+import { ApiConflictResponse, ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger'
 import { ApiDoc } from 'src/common/decorators/api-doc.decorator'
 import { CreateUserDto } from 'src/user/dto/user.dto'
 import { AuthService } from './auth.service'
@@ -7,6 +7,7 @@ import { AuthResponse } from './dto/auth-response'
 import { SigninUserDto } from './dto/signin-user.dto'
 import { PublicRoute } from '../common/decorators/public-route.decorator'
 import { LocalAuthGuard } from './guards/local-auth.guard'
+import { ValidateBodyGuard } from 'src/common/guards/validate-body.guard'
 
 /**
  * Auth Controller
@@ -20,14 +21,15 @@ export class AuthController {
   /**
    * Signin existing user
    * @param signinUserDto: SigninUserDto
+   * @param req: Request
    * @returns Promise<AuthResponse>
    */
-  // TODO: add validate body guard
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(new ValidateBodyGuard(SigninUserDto), LocalAuthGuard)
   @Post('signin')
+  @ApiOkResponse({ description: 'ok', type: AuthResponse })
   @ApiNotFoundResponse({ description: 'Not found' })
-  async signin(@Body() signinUserDto: SigninUserDto): Promise<AuthResponse> {
-    return await this.authService.signin(signinUserDto)
+  async signin(@Body() signinUserDto: SigninUserDto, @Request() req): Promise<AuthResponse> {
+    return await this.authService.signin(req.user)
   }
 
   /**
@@ -37,6 +39,7 @@ export class AuthController {
    */
   @Post('signup')
   @ApiConflictResponse({ description: 'Already exists' })
+  @ApiOkResponse({ description: 'ok', type: AuthResponse })
   async signup(@Body() createUserDto: CreateUserDto): Promise<AuthResponse> {
     return await this.authService.signup(createUserDto)
   }

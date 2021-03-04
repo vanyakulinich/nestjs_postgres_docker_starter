@@ -5,6 +5,9 @@ import { User } from 'src/user/entity/user.entity'
 import { ConfigService } from '@nestjs/config'
 import { IJwtPayload, IJwtUser } from '../interfaces/jwt-interface'
 
+/**
+ * Passport JWT Strategy
+ */
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(readonly configService: ConfigService) {

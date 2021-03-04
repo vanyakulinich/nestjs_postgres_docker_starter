@@ -25,7 +25,7 @@
     "migrations:create": "npx typeorm migration:create -n SchemaSync",
     "migrations:run": "npx typeorm migration:run",
     "migrations:revert": "npx typeorm migration:revert",
-    "launch:prod": "npm run build && npm run migrations:generate && npm run migrations:run && npm run pm2:start"
+    "launch:prod": "npm run build && npm run migrations:run && npm run pm2:start"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
