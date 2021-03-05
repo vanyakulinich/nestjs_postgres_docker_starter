@@ -7,7 +7,17 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
 
-export const ApiDoc = ({ tag = '', isPublic = false }: { tag: string; isPublic?: boolean }) => {
+interface IApiDocOptions {
+  tag: string
+  isPublic?: boolean
+}
+
+/**
+ * Decorator for swagger docs controller
+ * @param options: IApiDocOptions
+ * @returns result of @nestjs/common applyDecorators function
+ */
+export const ApiDoc = ({ tag = '', isPublic = false }: IApiDocOptions) => {
   const decorators = [
     ApiTags(tag),
     ApiBadRequestResponse({ description: 'Bad Request' }),

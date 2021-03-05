@@ -17,6 +17,11 @@ interface IRoteDocOptions {
   accepted?: { type?: typeof Function | any; isArray?: boolean }
 }
 
+/**
+ * Common route docs swagger decorator
+ * @param options IRouteDocOptions
+ * @returns result of @nestjs/common applyDecorators function
+ */
 export const RouteDoc = ({
   operation,
   conflict,

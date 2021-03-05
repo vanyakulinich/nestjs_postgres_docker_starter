@@ -5,10 +5,18 @@ import { validate } from 'class-validator'
 
 class IValidateClass {}
 
+/**
+ * Guard to validate request body in cases validation must be dome before other guards
+ */
 @Injectable()
 export class ValidateBodyGuard implements CanActivate {
   constructor(private readonly ValidateClass: typeof IValidateClass) {}
 
+  /**
+   * Method which triggers when guard is launched, decides whether to pass request or not
+   * @param context ExecutionContext
+   * @returns Promise<boolean>
+   */
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest()
     const { body } = request

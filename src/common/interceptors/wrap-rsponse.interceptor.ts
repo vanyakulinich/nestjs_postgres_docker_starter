@@ -4,6 +4,9 @@ import { Response } from 'express'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
+/**
+ * Interceptor which wraps response, adds status code and timestamp
+ */
 @Injectable()
 export class WrapResponseInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {

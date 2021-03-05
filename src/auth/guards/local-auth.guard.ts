@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 
+/**
+ * Local Auth Guard
+ */
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
   constructor() {

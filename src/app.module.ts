@@ -4,6 +4,9 @@ import { ConfigModule } from './config/config.module'
 import { CommonModule } from './common/common.module'
 import { AuthModule } from './auth/auth.module'
 
+/**
+ * Main app module
+ */
 @Module({
   imports: [
     ConfigModule,

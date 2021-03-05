@@ -8,13 +8,17 @@ import {
 import { Observable, throwError, TimeoutError } from 'rxjs'
 import { catchError, timeout } from 'rxjs/operators'
 
+/**
+ * Interceptor to set response timeout, defaults to 5000ms
+ */
 @Injectable()
 export class ResponseTimeoutInterceptor implements NestInterceptor {
-  private readonly timeoutMs = 5000
+  constructor(private readonly customTimeout?: number) {}
+  private readonly defaultTimeoutMs = 5000
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
-      timeout(this.timeoutMs),
+      timeout(this.customTimeout || this.defaultTimeoutMs),
       catchError((err) => {
         if (err instanceof TimeoutError) {
           return throwError(new RequestTimeoutException())

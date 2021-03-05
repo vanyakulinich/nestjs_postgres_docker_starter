@@ -4,7 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { appConfig } from './app.config'
 import { databaseConfig } from './database.config'
 import { createValidationSchema } from './validation.schema'
-
+/**
+ * Config Module
+ */
 @Module({
   imports: [
     NestConfigModule.forRoot({
