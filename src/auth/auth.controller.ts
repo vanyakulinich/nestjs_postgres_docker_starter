@@ -1,5 +1,4 @@
 import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common'
-import { ApiConflictResponse, ApiNotFoundResponse } from '@nestjs/swagger'
 import { ApiDoc } from 'src/common/decorators/api-doc.decorator'
 import { CreateUserDto } from 'src/user/dto/user.dto'
 import { AuthService } from './auth.service'
@@ -8,6 +7,7 @@ import { SigninUserDto } from './dto/signin-user.dto'
 import { PublicRoute } from '../common/decorators/public-route.decorator'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 import { ValidateBodyGuard } from 'src/common/guards/validate-body.guard'
+import { RouteDoc } from 'src/common/decorators/route-doc.decorator'
 
 /**
  * Auth Controller
@@ -26,7 +26,11 @@ export class AuthController {
    */
   @UseGuards(new ValidateBodyGuard(SigninUserDto), LocalAuthGuard)
   @Post('signin')
-  @ApiNotFoundResponse({ description: 'Not found' })
+  @RouteDoc({
+    operation: 'Sign in existing user',
+    notFound: true,
+    created: { type: AuthResponse },
+  })
   signin(@Body() signinUserDto: SigninUserDto, @Request() req): AuthResponse {
     return this.authService.signin(req.user)
   }
@@ -37,7 +41,11 @@ export class AuthController {
    * @returns Promise<AuthResponse>
    */
   @Post('signup')
-  @ApiConflictResponse({ description: 'Already exists' })
+  @RouteDoc({
+    operation: 'Sign up new user',
+    conflict: true,
+    created: { type: AuthResponse },
+  })
   async signup(@Body() createUserDto: CreateUserDto): Promise<AuthResponse> {
     return await this.authService.signup(createUserDto)
   }
