@@ -97,6 +97,5 @@ export class UserController {
     return await this.userService.changeUserPassword(user.id, changePasswordDto)
   }
 
-  // TODO: MAKE REUSABLE @RouteDoc + update readme
   // add more routes handlers here
 }

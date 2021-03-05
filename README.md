@@ -1,5 +1,7 @@
 ## NestJS + PostgreSQL + Docker Starter Template
 
+<!-- TODO: add desc about compodoc and auth with jwt -->
+
 ### Description
 
 Starter Template for building apps with Nest.js backend and PostgreSQL database, wrapped in docker containers.<br/>
@@ -9,15 +11,19 @@ Main purpose of this starter is to save developers time, which is usually spend 
 
 - [x] PostgreSQL local database
 - [x] Nest.js as backend server
-- [x] Environments are splitted (development/production)
+- [x] Environments for development and production modes
 - [x] Configs setup
-- [x] Some basic backend examples(module+service+controller+entity)
+- [x] Basic user module with most common CRUD
+- [x] Auth module with signin/signup logic
+- [x] Jwt auth implementation, local and jwt strategies
 - [x] Git hooks support (pre-commit + commit-msg)
 - [x] Conventional Commits Support
 - [x] Docker + docker-compose configs
 - [x] Bash scripts for one-command docker launch
 - [x] Pm2 support for production
 - [x] Migrations support for production
+- [x] Open API swagger docs configs
+- [x] App compodoc documentation
 
 ### Before use
 
@@ -81,7 +87,18 @@ Note: you may need "sudo" for bash.
 
   NOTE:<br/>
   In dev mode migrations are applied automatically via nest-typeorm synchronize prop.<br/>
-  In production mode migrations are generated via typeorm cli together with the server launch when launching containers. No need to create or generate it manually before launch of server, everything can be done automatically when containers start.
+  In production mode migrations are generated via typeorm cli together with the server launch when launching containers. No need to create or generate it manually before launch of server, everything can be done automatically when containers start. To apply new migrations just restart working container with server
+
+### Documentation
+
+Server API docs are created via Swagger nest package<br/>
+
+App documentation was created via [compodoc](https://docs.nestjs.com/recipes/documentation) tool. To check the docs:
+
+```bash
+  # generate latest docs and lauches web server to inspect docs in browser at http://localhost:8080
+  npm run compodoc
+```
 
 ### What's next
 
