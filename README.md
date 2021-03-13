@@ -19,7 +19,6 @@ Main purpose of this starter is to save developers time, which is usually spend 
 - [x] Git hooks support (pre-commit + commit-msg)
 - [x] Conventional Commits Support
 - [x] Docker + docker-compose configs
-- [x] Bash scripts for one-command docker launch
 - [x] Pm2 support for production
 - [x] Migrations support for production
 - [x] Open API swagger docs configs
